@@ -5,3 +5,6 @@ trustPolicy: no-downgrade
 allowBuilds:
   esbuild: true
   lightningcss: true
+
+trustPolicyExclude:
+  - semver@6.3.1
