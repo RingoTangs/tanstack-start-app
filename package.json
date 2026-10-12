@@ -13,7 +13,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "pnpm lint && pnpm format && pnpm typecheck"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
