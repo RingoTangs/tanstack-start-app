@@ -13,7 +13,7 @@
     "format:fix": "prettier --write .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
-    "check": "pnpm lint && pnpm format && pnpm typecheck"
+    "check": "pnpm lint && pnpm format && pnpm typecheck && pnpm test"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
