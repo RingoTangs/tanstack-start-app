@@ -54,6 +54,9 @@ importers:
       '@prettier/plugin-xml':
         specifier: ^3.4.2
         version: 3.4.2(prettier@3.9.10)
+      '@ringotangs/tsconfig':
+        specifier: ^0.3.0
+        version: 0.3.0(typescript@5.9.3)
       '@types/node':
         specifier: ^22.20.5
         version: 22.20.5
@@ -458,6 +461,11 @@ packages:
     resolution: {integrity: sha512-/UyNlHfkuLXG6Ed85KB0WBF283xn2yavR+UtRibBRUcvEJId2DSLdGXwJ/cDa1X++SWDPzq3+GSFniHjkNy7yg==}
     peerDependencies:
       prettier: ^3.0.0
+
+  '@ringotangs/tsconfig@0.3.0':
+    resolution: {integrity: sha512-ObsqTtb1Nr6gJahjPH0s2HMQ0ONtNA9H3w5tDnajIPUBYjv7WrLnzRO4uv8ortZm4cCEXzpsezbkLi6UDsWkTQ==}
+    peerDependencies:
+      typescript: '>=5.8.0'
 
   '@rolldown/binding-android-arm-eabi@1.2.13':
     resolution: {integrity: sha512-Vu/NICrgdRvUOeaJZIyB2FP63s6fO/4ud5l8dXmxDx9yDyn+mN0y+gsvsVviSli+T361Aqo0h46EuMoobrwawA==}
@@ -3160,6 +3168,10 @@ snapshots:
     dependencies:
       '@xml-tools/parser': 1.0.12
       prettier: 3.9.10
+
+  '@ringotangs/tsconfig@0.3.0(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
 
   '@rolldown/binding-android-arm-eabi@1.2.13':
     optional: true
