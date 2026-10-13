@@ -6,6 +6,8 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { GeneralError } from '@/features/errors/GeneralError'
+import { NotFoundError } from '@/features/errors/NotFoundError'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -31,6 +33,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       ],
     }),
     shellComponent: RootDocument,
+    notFoundComponent: NotFoundError,
+    errorComponent: GeneralError,
   },
 )
 
