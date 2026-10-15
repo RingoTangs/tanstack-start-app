@@ -6,5 +6,6 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   test: {
     environment: 'node',
+    setupFiles: ['./src/setup.dom.ts'],
   },
 })

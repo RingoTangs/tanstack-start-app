@@ -3,7 +3,6 @@
 import { render, screen } from '@testing-library/react'
 import { expect, it } from 'vitest'
 import { NotFoundError } from './NotFoundError'
-import '../../setup.dom'
 
 it('renders the page not found message in the DOM', () => {
   render(<NotFoundError />)
