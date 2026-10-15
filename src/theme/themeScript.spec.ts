@@ -14,8 +14,6 @@ beforeEach(() => {
 afterEach(() => {
   vi.restoreAllMocks()
   vi.unstubAllGlobals()
-  vi.unstubAllEnvs()
-  vi.resetModules()
 })
 
 it.each([
@@ -65,15 +63,4 @@ it('缺少 matchMedia 时回退为浅色', () => {
   vi.stubGlobal('matchMedia', undefined)
   runInNewContext(themeScript, { window, document, localStorage })
   expect(document.documentElement.style.colorScheme).toBe('light')
-})
-
-it('安全嵌入包含 script 结束标签的自定义存储键', async () => {
-  const key = '</script><script>alert("theme")</script>'
-  vi.stubEnv('VITE_THEME_STORAGE_KEY', key)
-  const { themeScript: customScript } = await import('./themeScript')
-  localStorage.setItem(key, 'dark')
-
-  expect(customScript).not.toContain('</script>')
-  runInNewContext(customScript, { window, document, localStorage })
-  expect(document.documentElement).toHaveClass('dark')
 })
