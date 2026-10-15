@@ -6,12 +6,16 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client", "node"],
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
-    "./src/**/*.server.ts",
-    "./src/**/*.spec.ts",
-    "./src/**/*.test.ts"
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/test/**"
   ]
 }
