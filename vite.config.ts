@@ -7,7 +7,7 @@ import { defineConfig } from 'vite'
 const PORT = 3000
 const PREVIEW_PORT = 4000
 
-const config = defineConfig({
+export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     nitro({ rollupConfig: { external: [/^@sentry\//] } }),
@@ -22,5 +22,3 @@ const config = defineConfig({
     port: PREVIEW_PORT,
   },
 })
-
-export default config
