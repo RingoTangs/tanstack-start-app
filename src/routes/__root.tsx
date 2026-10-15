@@ -9,6 +9,8 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { GeneralError } from '@/features/errors/GeneralError'
 import { NotFoundError } from '@/features/errors/NotFoundError'
 import appCss from '@/styles/index.css?url'
+import { ThemeProvider } from '@/theme'
+import { themeScript } from '@/theme/themeScript'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
@@ -40,14 +42,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml -- Static bootstrap script with safely serialized configuration. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <HeadContent />
       </head>
       <body>
-        {children}
-        <ReactQueryDevtools />
-        <TanStackRouterDevtools />
+        <ThemeProvider>
+          {children}
+          <ReactQueryDevtools />
+          <TanStackRouterDevtools />
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>

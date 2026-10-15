@@ -1,8 +1,14 @@
+// @vitest-environment jsdom
+
+import { runInNewContext } from 'node:vm'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { StrictMode } from 'react'
+import { hydrateRoot } from 'react-dom/client'
+import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider, useTheme } from '@/theme'
 import { THEME_STORAGE_KEY } from './theme'
+import { themeScript } from './themeScript'
 
 const SYSTEM_THEME_QUERY = '(prefers-color-scheme: dark)'
 
@@ -70,6 +76,20 @@ const ThemeConsumer: React.FC = () => {
   )
 }
 
+function HydrationConsumer({
+  onRender,
+}: {
+  onRender: (theme: string, resolvedTheme: string) => void
+}) {
+  const { theme, resolvedTheme } = useTheme()
+  onRender(theme, resolvedTheme)
+  return (
+    <span>
+      {theme}/{resolvedTheme}
+    </span>
+  )
+}
+
 const renderTheme = () => {
   return render(
     <ThemeProvider>
@@ -86,6 +106,7 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup()
+  vi.restoreAllMocks()
   vi.unstubAllGlobals()
 })
 
@@ -181,6 +202,124 @@ describe('theme provider', () => {
     expect(media.listeners.size).toBe(1)
     unmount()
     expect(media.listeners.size).toBe(0)
+  })
+
+  it.each([THEME_STORAGE_KEY, null])(
+    '删除主题或清空存储时回退为 system（%s）',
+    (key) => {
+      localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+      installMatchMedia()
+      renderTheme()
+
+      act(() => {
+        localStorage.clear()
+        window.dispatchEvent(new StorageEvent('storage', { key }))
+      })
+
+      expect(screen.getByTestId('theme')).toHaveTextContent('system')
+      expect(document.documentElement).not.toHaveClass('dark')
+    },
+  )
+
+  it('忽略 sessionStorage 和其他存储键的事件', () => {
+    installMatchMedia()
+    renderTheme()
+
+    act(() => {
+      window.dispatchEvent(
+        new StorageEvent('storage', {
+          key: THEME_STORAGE_KEY,
+          newValue: 'dark',
+          storageArea: sessionStorage,
+        }),
+      )
+      window.dispatchEvent(
+        new StorageEvent('storage', {
+          key: 'another-setting',
+          newValue: 'dark',
+        }),
+      )
+    })
+
+    expect(screen.getByTestId('theme')).toHaveTextContent('system')
+  })
+
+  it('系统主题变化不重复持久化用户偏好', () => {
+    const media = installMatchMedia()
+    renderTheme()
+    const persist = vi.spyOn(Storage.prototype, 'setItem')
+
+    act(() => media.setMatches(true))
+
+    expect(document.documentElement).toHaveClass('dark')
+    expect(persist).not.toHaveBeenCalled()
+  })
+
+  it('存储不可用时仍能跟随系统并切换主题', () => {
+    installMatchMedia(true)
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('Storage unavailable')
+    })
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('Storage unavailable')
+    })
+    renderTheme()
+
+    expect(document.documentElement).toHaveClass('dark')
+    fireEvent.click(screen.getByRole('button', { name: 'Light' }))
+    expect(document.documentElement).not.toHaveClass('dark')
+  })
+
+  it('matchMedia 不可用时回退为浅色并允许手动切换', () => {
+    vi.stubGlobal('matchMedia', undefined)
+    renderTheme()
+
+    expect(screen.getByTestId('resolved-theme')).toHaveTextContent('light')
+    fireEvent.click(screen.getByRole('button', { name: 'Dark' }))
+    expect(document.documentElement).toHaveClass('dark')
+  })
+
+  it('hydration 首次状态与 SSR 一致，恢复期间不覆盖首屏深色或存储', async () => {
+    installMatchMedia()
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    const snapshots = vi.fn()
+    const app = (
+      <StrictMode>
+        <ThemeProvider>
+          <HydrationConsumer onRender={snapshots} />
+        </ThemeProvider>
+      </StrictMode>
+    )
+    const container = document.createElement('div')
+    container.innerHTML = renderToString(app)
+    document.body.append(container)
+    expect(container).toHaveTextContent('system/light')
+    snapshots.mockClear()
+
+    runInNewContext(themeScript, { window, document, localStorage })
+    expect(document.documentElement).toHaveClass('dark')
+    const toggle = vi.spyOn(document.documentElement.classList, 'toggle')
+    const persist = vi.spyOn(Storage.prototype, 'setItem')
+    const onRecoverableError = vi.fn()
+    const consoleError = vi.spyOn(console, 'error')
+    let root: ReturnType<typeof hydrateRoot> | undefined
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, app, { onRecoverableError })
+      })
+
+      expect(snapshots.mock.calls[0]).toEqual(['system', 'light'])
+      expect(container).toHaveTextContent('dark/dark')
+      expect(onRecoverableError).not.toHaveBeenCalled()
+      expect(consoleError).not.toHaveBeenCalled()
+      expect(toggle).toHaveBeenCalledWith('dark', true)
+      expect(toggle).not.toHaveBeenCalledWith('dark', false)
+      expect(persist).toHaveBeenCalledWith(THEME_STORAGE_KEY, 'dark')
+      expect(persist).not.toHaveBeenCalledWith(THEME_STORAGE_KEY, 'system')
+    } finally {
+      await act(async () => root?.unmount())
+      container.remove()
+    }
   })
 
   it('在 Provider 外使用时抛出错误', () => {

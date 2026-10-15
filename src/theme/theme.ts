@@ -1,4 +1,5 @@
-export const THEME_STORAGE_KEY = import.meta.env.VITE_THEME_STORAGE_KEY
+export const THEME_STORAGE_KEY =
+  import.meta.env.VITE_THEME_STORAGE_KEY?.trim() || 'app-theme'
 export const SYSTEM_THEME_QUERY = '(prefers-color-scheme: dark)'
 
 export const themeModes = ['light', 'dark', 'system'] as const
@@ -28,7 +29,11 @@ export const persistTheme = (theme: ThemeMode): void => {
 }
 
 export const getSystemTheme = (): ResolvedTheme => {
-  return matchMedia(SYSTEM_THEME_QUERY).matches ? 'dark' : 'light'
+  return typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia(SYSTEM_THEME_QUERY).matches
+    ? 'dark'
+    : 'light'
 }
 
 export const applyTheme = (theme: ResolvedTheme): void => {
