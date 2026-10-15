@@ -1,11 +1,7 @@
 {
-  "extends": "@ringotangs/tsconfig/react",
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "types": ["vite/client", "node"],
-    "allowImportingTsExtensions": true
-  },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "files": []
 }

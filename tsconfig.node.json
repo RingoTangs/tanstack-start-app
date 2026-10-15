@@ -1,0 +1,8 @@
+{
+  "extends": "@ringotangs/tsconfig",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowImportingTsExtensions": true
+  },
+  "include": ["vite.config.ts", "vitest.config.ts", "./src/**/*.server.ts"]
+}
