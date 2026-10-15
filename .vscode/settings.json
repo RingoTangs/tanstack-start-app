@@ -58,5 +58,8 @@
     "**/routeTree.gen.ts": true,
     "**/node_modules/**": true,
     "**/pnpm-lock.yaml": true
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
   }
 }
