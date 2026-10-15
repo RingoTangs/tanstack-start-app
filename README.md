@@ -4,12 +4,12 @@
 
 Vitest runs a single test project using a configuration separate from the application. Tests use Node by default and follow Vitest's standard naming conventions, such as `*.spec.ts`, `*.test.ts`, and their `.tsx`, `.js`, and `.jsx` equivalents. File names do not select the environment.
 
-For React component and DOM tests, add `// @vitest-environment jsdom` at the top of the test file and import `src/test/setup.dom.ts` using a relative path. This setup provides DOM matchers and automatic cleanup after each test. For example, a test in `src/features/errors` starts with:
+For React component and DOM tests, add `// @vitest-environment jsdom` at the top of the test file and import `src/setup.dom.ts` using a relative path. This setup provides DOM matchers and automatic cleanup after each test. For example, a test in `src/features/errors` starts with:
 
 ```ts
 // @vitest-environment jsdom
 
-import '../../test/setup.dom'
+import '../../setup.dom'
 ```
 
 jsdom simulates browser APIs inside Node, so these tests can still access Node APIs. They do not run in a real browser. Tests without the environment comment use Node without browser globals or DOM setup.
