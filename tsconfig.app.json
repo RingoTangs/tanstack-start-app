@@ -7,7 +7,6 @@
       "@/*": ["./src/*"]
     },
     "types": ["vite/client", "node"],
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
