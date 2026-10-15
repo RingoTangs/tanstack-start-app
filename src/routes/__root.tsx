@@ -8,7 +8,7 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { GeneralError } from '@/features/errors/GeneralError'
 import { NotFoundError } from '@/features/errors/NotFoundError'
-import appCss from '../styles.css?url'
+import appCss from '@/styles/index.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
