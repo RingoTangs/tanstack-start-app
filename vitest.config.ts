@@ -1,7 +1,8 @@
 import react from '@vitejs/plugin-react'
 import { configDefaults, defineConfig } from 'vitest/config'
 
-const domTests = ['**/*.dom.{test,spec}.{ts,tsx,js,jsx}']
+const clientTests = ['**/*.client.{test,spec}.{ts,tsx,js,jsx}']
+const serverTests = ['**/*.server.{test,spec}.{ts,tsx,js,jsx}']
 
 export default defineConfig({
   test: {
@@ -9,21 +10,21 @@ export default defineConfig({
       {
         resolve: { tsconfigPaths: true },
         test: {
-          name: 'node',
+          name: 'server',
           environment: 'node',
-          include: configDefaults.include,
-          exclude: [...configDefaults.exclude, ...domTests],
+          include: serverTests,
+          exclude: configDefaults.exclude,
         },
       },
       {
         plugins: [react()],
         resolve: { tsconfigPaths: true },
         test: {
-          name: 'dom',
+          name: 'client',
           environment: 'jsdom',
-          include: domTests,
+          include: clientTests,
           exclude: configDefaults.exclude,
-          setupFiles: ['./src/test/setup.dom.ts'],
+          setupFiles: ['./src/test/setup.client.ts'],
         },
       },
     ],
