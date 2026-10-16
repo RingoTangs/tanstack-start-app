@@ -1,5 +1,11 @@
 # TanStack Start App
 
+## Theme
+
+The root document uses `ThemeProvider` and `getThemeScript()` from `@ringotangs/react-theme`. The synchronous head script applies the initial color scheme before the body is parsed, and the Provider restores the saved preference after hydration. Both use the package defaults: `system` mode, localStorage key `theme`, and the `dark` class on `<html>`. Tailwind's `dark:` variant follows that class.
+
+Import `useTheme` and theme types directly from `@ringotangs/react-theme` in application components. The selected preference is saved when the user changes it; mounting does not write a default value or replace an invalid stored value. No Vite theme plugin is needed for this SSR document.
+
 ## Tests
 
 Vitest runs a single test project using a configuration separate from the application. Tests use Node by default and follow Vitest's standard naming conventions, such as `*.spec.ts`, `*.test.ts`, and their `.tsx`, `.js`, and `.jsx` equivalents. File names do not select the environment.

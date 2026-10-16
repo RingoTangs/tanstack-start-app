@@ -1,4 +1,5 @@
 import type { QueryClient } from '@tanstack/react-query'
+import { getThemeScript, ThemeProvider } from '@ringotangs/react-theme'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   createRootRouteWithContext,
@@ -9,7 +10,8 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { GeneralError } from '@/features/errors/GeneralError'
 import { NotFoundError } from '@/features/errors/NotFoundError'
 import appCss from '@/styles/index.css?url'
-import { ThemeProvider, themeScript } from '@/theme'
+
+const themeScript = getThemeScript()
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {

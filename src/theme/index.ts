@@ -1,5 +1,0 @@
-export type { ResolvedTheme, ThemeMode } from './theme'
-export type { ThemeContextValue } from './ThemeContext'
-export { ThemeProvider } from './ThemeProvider'
-export { themeScript } from './themeScript'
-export { useTheme } from './useTheme'

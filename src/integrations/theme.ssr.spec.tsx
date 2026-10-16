@@ -1,7 +1,10 @@
+import {
+  getThemeScript,
+  ThemeProvider,
+  useTheme,
+} from '@ringotangs/react-theme'
 import { renderToString } from 'react-dom/server'
 import { expect, it } from 'vitest'
-import { ThemeProvider, useTheme } from './index'
-import { getSystemTheme } from './theme'
 
 function Consumer() {
   const { theme, resolvedTheme } = useTheme()
@@ -12,9 +15,8 @@ function Consumer() {
   )
 }
 
-it('在 Node 环境中以固定主题状态完成 SSR', () => {
+it('包的默认配置无需浏览器 API 即可完成 SSR 和脚本生成', () => {
   expect(typeof window).toBe('undefined')
-  expect(getSystemTheme()).toBe('light')
   expect(
     renderToString(
       <ThemeProvider>
@@ -22,4 +24,5 @@ it('在 Node 环境中以固定主题状态完成 SSR', () => {
       </ThemeProvider>,
     ),
   ).toBe('<span>system<!-- -->/<!-- -->light</span>')
+  expect(getThemeScript()).toContain('window.localStorage.getItem("theme")')
 })
