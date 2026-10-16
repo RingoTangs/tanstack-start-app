@@ -12,7 +12,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test": "vitest run",
-    "typecheck": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json",
     "check": "pnpm lint && pnpm format && pnpm typecheck && pnpm test"
   },
   "dependencies": {

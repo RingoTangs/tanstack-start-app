@@ -29,4 +29,4 @@ pnpm check
 
 `pnpm test` runs all tests. To run a single file, pass its path, for example `pnpm test src/features/errors/NotFoundError.spec.tsx`. `pnpm check` runs lint, formatting, type checking, and tests.
 
-Test server business logic and pure functions in the default Node environment. SSR, Server Function communication, and request context need integration tests against a running application. Unit tests do not load the Nitro or TanStack Start application plugins. Application and test TypeScript files share `tsconfig.app.json`.
+Test server business logic and pure functions in the default Node environment. SSR, Server Function communication, and request context need integration tests against a running application. Unit tests do not load the Nitro or TanStack Start application plugins. Application, test, and Vite/Vitest configuration TypeScript files share `tsconfig.json`.
