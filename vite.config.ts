@@ -5,7 +5,6 @@ import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
 
 const PORT = 3000
-const PREVIEW_PORT = 4000
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },
@@ -19,6 +18,6 @@ export default defineConfig({
     port: PORT,
   },
   preview: {
-    port: PREVIEW_PORT,
+    port: PORT,
   },
 })
