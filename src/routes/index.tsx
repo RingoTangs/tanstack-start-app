@@ -16,6 +16,15 @@ function Home() {
       >
         查看 Streaming SSR 示例 →
       </Link>
+      <div className="mt-4">
+        <Link
+          to="/pending"
+          preload={false}
+          className="text-primary underline underline-offset-4"
+        >
+          查看全局 Pending 示例 →
+        </Link>
+      </div>
     </div>
   )
 }
