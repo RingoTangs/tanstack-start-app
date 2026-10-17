@@ -3,6 +3,18 @@
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.24.0",
+  "description": "",
+  "author": "RingoTangs",
+  "license": "MIT",
+  "homepage": "https://github.com/RingoTangs/tanstack-start-app#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/RingoTangs/tanstack-start-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RingoTangs/tanstack-start-app/issues"
+  },
+  "keywords": [],
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
