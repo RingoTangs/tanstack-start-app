@@ -13,7 +13,8 @@
     "format:fix": "prettier --write .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
-    "check": "pnpm lint && pnpm format && pnpm typecheck && pnpm test"
+    "check": "pnpm lint && pnpm format && pnpm typecheck && pnpm test",
+    "check:fix": "pnpm lint:fix && pnpm format:fix"
   },
   "dependencies": {
     "@ringotangs/react-theme": "^0.1.2",
