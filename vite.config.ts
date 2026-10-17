@@ -9,8 +9,9 @@ const PORT = 3000
 export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
+    tailwindcss(),
+    tanstackStart(),
     nitro({
-      rollupConfig: { external: [/^@sentry\//] },
       rolldownConfig: {
         onLog(level, log, defaultHandler) {
           const source = (log.id ?? log.loc?.file ?? log.message).replace(
@@ -30,8 +31,6 @@ export default defineConfig({
         },
       },
     }),
-    tailwindcss(),
-    tanstackStart(),
     react(),
   ],
   server: {
