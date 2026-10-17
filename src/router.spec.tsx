@@ -3,7 +3,7 @@
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, expect, it, vi } from 'vitest'
-import { getRouter } from '@/router'
+import { getRouter } from './router'
 
 // Exercise the actual router defaults and page routes without the SSR document shell.
 vi.mock('@/routes/__root', async () => {

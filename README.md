@@ -10,6 +10,8 @@ Import `useTheme` and theme types directly from `@ringotangs/react-theme` in app
 
 Vitest runs a single test project using a configuration separate from the application. Tests use Node by default and follow Vitest's standard naming conventions, such as `*.spec.ts`, `*.test.ts`, and their `.tsx`, `.js`, and `.jsx` equivalents. File names do not select the environment.
 
+Keep unit tests beside the code they cover, such as `src/components/Button.spec.tsx`. Router behavior tests live beside the router in `src/router.spec.tsx`, outside `src/routes` so the file router does not discover them as pages. Third-party package internals are not retested here.
+
 Vitest automatically loads `src/setup.dom.ts` before each test file to provide DOM matchers. No manual setup import is needed. For React component and DOM tests, add this comment at the top of the test file:
 
 ```ts
@@ -27,6 +29,6 @@ pnpm test
 pnpm check
 ```
 
-`pnpm test` runs all tests. To run a single file, pass its path, for example `pnpm test src/features/errors/NotFoundError.spec.tsx`. `pnpm check` runs lint, formatting, type checking, and tests.
+`pnpm test` runs all tests. To run a single file, pass its path, for example `pnpm test src/components/Button.spec.tsx`. `pnpm check` runs lint, formatting, type checking, and tests.
 
 Test server business logic and pure functions in the default Node environment. SSR, Server Function communication, and request context need integration tests against a running application. Unit tests do not load the Nitro or TanStack Start application plugins. Application, test, and Vite/Vitest configuration TypeScript files share `tsconfig.json`.
