@@ -18,7 +18,6 @@ export function getRouter() {
     defaultPendingComponent: RouterPending,
     defaultPendingMs: 150,
     defaultPendingMinMs: 300,
-
     defaultNotFoundComponent: () => <NotFound />,
     defaultErrorComponent: () => <GeneralError />,
   })
