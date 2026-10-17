@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.24.0",
-  "description": "",
+  "description": "A TanStack Start starter with React, TypeScript, TanStack Query, Tailwind CSS, and streaming SSR.",
   "author": "RingoTangs",
   "license": "MIT",
   "homepage": "https://github.com/RingoTangs/tanstack-start-app#readme",
@@ -14,7 +14,18 @@
   "bugs": {
     "url": "https://github.com/RingoTangs/tanstack-start-app/issues"
   },
-  "keywords": [],
+  "keywords": [
+    "tanstack-start",
+    "tanstack-router",
+    "tanstack-query",
+    "react",
+    "typescript",
+    "vite",
+    "tailwindcss",
+    "ssr",
+    "streaming",
+    "starter"
+  ],
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
