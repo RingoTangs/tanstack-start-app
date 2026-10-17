@@ -70,10 +70,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 先构建客户端和 SSR 服务端，同时生成最新路由树
-      - name: Build
-        run: pnpm build
-
-      # 使用最新路由树，依次执行 lint、格式、类型检查和测试
+      # 先验证代码质量，依次执行 lint、格式、类型检查和测试
       - name: Check
         run: pnpm check
+
+      # 检查通过后，验证客户端和 SSR 服务端的生产构建
+      - name: Build
+        run: pnpm build

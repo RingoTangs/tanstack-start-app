@@ -57,7 +57,7 @@ Both home-page example links disable preloading so hovering does not start their
 - Router coordinates navigation and loader execution. Query can own business-data fetching, caching, and invalidation. Share `queryOptions()` between a loader and its component when introducing Query-backed pages.
 - `defaultPreloadStaleTime: 0` lets Query decide whether a preload needs fresh data. `setupRouterSsrQueryIntegration` provides the Query provider and handles dehydration, hydration, and streaming; a second QueryClient or provider is not needed.
 
-File routes live in `src/routes`. Vite development and build runs generate `src/routeTree.gen.ts`; do not edit it manually. After adding or removing routes, run development or build before checking types.
+File routes live in `src/routes`. Vite development and build runs generate `src/routeTree.gen.ts`; do not edit it manually. After adding or removing routes, run development or build before checking types, and commit the updated route tree with the route changes. CI runs `pnpm check` before `pnpm build`, using the committed route tree for type checking and tests.
 
 Application code, tests, and Vite/Vitest configuration files share [tsconfig.json](./tsconfig.json). The `@/*` alias maps to `src/*` and is resolved by both Vite and Vitest.
 

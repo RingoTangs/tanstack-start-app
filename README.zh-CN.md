@@ -57,7 +57,7 @@ pnpm preview
 - Router 协调导航和 loader 执行，Query 可以负责业务数据请求、缓存和失效更新。新增由 Query 管理数据的页面时，在 loader 和组件间复用 `queryOptions()`。
 - `defaultPreloadStaleTime: 0` 让 Query 判断预加载是否需要获取新数据。`setupRouterSsrQueryIntegration` 提供 Query Provider，并处理脱水、水合和 streaming，无需再创建第二个 QueryClient 或重复包裹 Provider。
 
-文件路由位于 `src/routes`。运行 Vite 开发或构建会生成 `src/routeTree.gen.ts`，不要手动编辑。新增或删除路由后，先运行开发或构建，再进行类型检查。
+文件路由位于 `src/routes`。运行 Vite 开发或构建会生成 `src/routeTree.gen.ts`，不要手动编辑。新增或删除路由后，先运行开发或构建，再进行类型检查，并将更新后的路由树与路由变更一起提交。CI 先运行 `pnpm check`，再运行 `pnpm build`，类型检查和测试使用仓库中已提交的路由树。
 
 应用代码、测试及 Vite/Vitest 配置共用 [tsconfig.json](./tsconfig.json)。`@/*` 别名映射到 `src/*`，Vite 和 Vitest 均会解析该别名。
 
